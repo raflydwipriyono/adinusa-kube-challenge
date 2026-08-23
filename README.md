@@ -84,7 +84,7 @@ Create a **Deployment** and **Service** with the following specifications:
 #### Secret Configuration
 **frontend** application needs several env variable to run, so create secret that contains the following keys :
 - **NEXT_PUBLIC_BACKEND_URL** `http://your-backend-service-name.your-namespace.svc.cluster.local:8000/api`
-- **API_URL** `http://backend-service.ecommerce.svc.cluster.local:8000/api`
+- **API_URL** `http://your-backend-service-name.your-namespace.svc.cluster.local:8000/api`
 - **FRONTEND_URL** `http://YOUR-FE-DOMAIN.com`
 - **NEXT_PUBLIC_API_URL** `http://YOUR-BE-DOMAIN.com/api`
 
@@ -117,7 +117,7 @@ Notes:
 ## Important Notes
 
 ### Flow:
-- create the namespace `ecommerce`
+- create the namespace `ecommerce`, ALL the kubernetes object will be placed inside this ns
 - Build your backend and frontend image
 - Ensure all images are successfully pushed to your image registry before deployment.
 - Setup database from folder `/tools`
@@ -128,5 +128,5 @@ Notes:
 - Create secret for frontend application
 - Deploy deployment and service for backend and frontend
 - Create ingress for backend and frontend
-- Look on what node your pod run and map that ip to your domain in `/etc/hosts`
-- Make sure your app are accessible and working (using http://YOUR-FE-DOMAIN.com:NodePort)
+- Map one of your Node IP to your domain in `/etc/hosts` (you can choose any Node IP)
+- Access your app using `http://YOUR-FE-DOMAIN.com:NodePort` , get the NodePort from `ingress-nginx-controller` service

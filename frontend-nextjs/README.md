@@ -74,6 +74,7 @@ runtime instead:
 | Variable | Required | Notes |
 |---|---|---|
 | `NEXT_PUBLIC_BACKEND_URL` | Yes | Backend URL used by the app, `/api` suffix included where the app calls the API |
+| `API_URL` | Yes | Backend URL used by the app, `/api` suffix included where the app calls the API |
 | `FRONTEND_URL` | Yes | Public URL of this frontend |
 | `NEXT_PUBLIC_API_URL` | Yes | Backend API base URL |
  
