@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: backend-migrate
+  namespace: ecommerce
+  labels:
+    app: backend
+    component: migration
+spec:
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 300
+  template:
+    metadata:
+      labels:
+        app: backend
+        component: migration
+    spec:
+      restartPolicy: Never
+      imagePullSecrets:
+      - name: harbor-image-secret
+      containers:
+      - name: migrate
+        image: "HARBOR_DOMAIN:v1"
+        imagePullPolicy: IfNotPresent
+        command: ["php", "artisan", "migrate", "--force"]
+        envFrom:
+          - secretRef:
+              name: backend-secret
+          - secretRef:
+              name: db-secret
+        env:
+        - name: DB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: MYSQL_DATABASE
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: MYSQL_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: MYSQL_PASSWORD
