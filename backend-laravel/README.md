@@ -42,6 +42,7 @@ DB_PORT=3306
 DB_DATABASE=laravel
 DB_USERNAME=laravel
 DB_PASSWORD=secret
+PRODUCT_IMAGES_UPLOAD_PATH=storage/images/products/
 ```
 
 4. Run MySQL
@@ -54,6 +55,7 @@ docker compose -f docker-compose.db.yaml up -d
 ```
 php artisan key:generate
 php artisan migrate
+php artisan db:seed
 ```
 
 6. Run Laravel
@@ -106,7 +108,7 @@ docker run --rm \
   -e DB_PASSWORD=<your-db-password> \
   -e APP_KEY=<your-generated-key> \
   your-registry.com/ecommerce/backend-laravel:<tag> \
-  php artisan migrate --force
+  sh -c "php artisan migrate --force && php artisan db:seed --force"
 ```
  
 `--force` is required because Laravel blocks migrations by default when
@@ -128,6 +130,7 @@ docker run --rm \
 | `DB_DATABASE` | Yes | Database name |
 | `DB_USERNAME` | Yes | Database user |
 | `DB_PASSWORD` | Yes | Database password |
+| `PRODUCT_IMAGES_UPLOAD_PATH` | Yes | Path prefix used to build the public URL for admin-uploaded product images, e.g. `storage/images/products/`|
  
 ---
  
@@ -138,4 +141,23 @@ docker run --rm \
 - `.env` file in this repo is not required/used inside the built image for these variables — they
   are meant to be injected as environment variables at runtime (e.g.
   Kubernetes Secrets)
- 
+- Admin login for `POST /api/admin-panel/*` endpoints requires a user with
+  `is_admin = 1`. There is no self-service registration for the first
+  admin account — create one manually via `php artisan tinker`:
+```
+kubectl exec -it -n ecommerce deployment/backend -- php artisan tinker
+---
+\App\Models\User::create([
+    'name' => 'admin',
+    'email' => 'admin@example.com',
+    'password' => bcrypt('admin'),
+    'is_admin' => 1,
+]);
+```
+
+```
+#example login
+curl -X POST http://YOUR-BE-DOMAIN.com:NodePort/api/admin-panel/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "admin@example.com", "password": "admin"}'
+```
