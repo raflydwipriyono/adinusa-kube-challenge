@@ -54,7 +54,7 @@ Create a **Deployment** and **Service** with the following specifications:
 - **Port:** `8000`
 - **NodePort** `31101`
 - **containerPort** `80`
-- Give the deployment minimum resource of `100m` CPU and `100Mi` memory. for the limit it is up to you
+- Give the deployment minimum resource of `100m` CPU and `128Mi` memory. for the limit it is up to you
 - Create HPA for backend with `maxReplica` 4,  CPU target 70% and memory target 75%
 
 #### Secret Configuration
@@ -79,7 +79,7 @@ Create a **Deployment** and **Service** with the following specifications:
 - **Port:** `3000`
 - **NodePort** `31102`
 - **containerPort:** `3000`
-- Give the deployment minimum resource of `100m` CPU and `1024Mi` memory. for the limit it is up to you
+- Give the deployment minimum resource of `150m` CPU and `640Mi` memory. for the limit it is up to you
 - Create HPA for backend with `maxReplica` 4,  CPU target 70% and memory target 75%
 
 #### Secret Configuration
