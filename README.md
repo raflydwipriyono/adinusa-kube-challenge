@@ -34,7 +34,8 @@ Save the output and create a kubernetes secret for backend `backend-secret` (The
 - `FRONTEND_URL` (your frontend domain)
 - `DB_HOST` (your database service name)
 - `DB_PORT`
-- `DB_CONNECTION` (mysql)
+- `DB_CONNECTION` = mysql
+- `PRODUCT_IMAGES_UPLOAD_PATH` = storage/images/products/
 ---
 
 Run `backend-migrate` job from folder `/tools` (dont forget to adjust the container image)
@@ -90,7 +91,7 @@ Create a **Deployment** and **Service** with the following specifications:
 
 #### Frontend Application Preview
 ![Frontend App](./frontend.png)
-
+![Menu](./menu.png)
 ---
 
 ### 6. Expose Applications Using Ingress

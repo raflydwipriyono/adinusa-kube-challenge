@@ -22,7 +22,7 @@ spec:
       - name: migrate
         image: "HARBOR_DOMAIN:v1"
         imagePullPolicy: IfNotPresent
-        command: ["php", "artisan", "migrate", "--force"]
+        command: ["sh", "-c", "php artisan migrate --force && php artisan db:seed --force"]
         envFrom:
           - secretRef:
               name: backend-secret

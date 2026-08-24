@@ -22,7 +22,9 @@ class ProductResource extends JsonResource
             'slug' => $this->slug,
             'category' => Category::find($this->category_id)->name,
             'category_id' => $this->category_id,
-            'primary_image' => url(env('PRODUCT_IMAGES_UPLOAD_PATH') . $this->primary_image),
+            'primary_image' => str_starts_with($this->primary_image, 'seed/')
+                ? url('images/' . $this->primary_image)
+                : url(env('PRODUCT_IMAGES_UPLOAD_PATH') . $this->primary_image),
             'status_value' => $this->getRawOriginal('status'),
             'status' => $this->status,
             'price' => $this->price,
