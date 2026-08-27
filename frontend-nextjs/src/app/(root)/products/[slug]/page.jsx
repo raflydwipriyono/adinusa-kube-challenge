@@ -52,7 +52,7 @@ export default async function singleProductPage({params}) {
                     {product.is_sale && <span>{salePercent(product.price, product.sale_price)}٪ Discount</span>}
                   </span>
 
-                  <CustomButton href={`/product/${product.slug}`} text='buy' />
+                  <CustomButton href={`/products/${product.slug}`} text='buy' />
                   <button className='ml-4 mt-2 inline-flex h-10 w-10 items-center justify-center rounded-full border-0 bg-gray-800 p-0 text-gray-500'>
                     <Heart />
                   </button>

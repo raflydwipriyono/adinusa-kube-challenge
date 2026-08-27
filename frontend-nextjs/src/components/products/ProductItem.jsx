@@ -43,7 +43,7 @@ export default function ProductItem({product}) {
           </span>
         </div>
         {/* Button */}
-        <CustomButton href={`/product/${product.slug}`} text='buy' />
+        <CustomButton href={`/products/${product.slug}`} text='buy' />
       </div>
     </div>
   );
